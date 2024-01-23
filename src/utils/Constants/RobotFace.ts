@@ -92,39 +92,166 @@ export const EXPRESSIONS = {
       part: LOOK_MOUTH.HAPPY,
     },
   ],
-  SAD: {
-    FACE: PART.FACE,
-    EYES: LOOK_EYES.PARTIALLY_OPEN,
-    LEFT_EYE: LOOK_LEFT_EYE.PARTIALLY_OPEN,
-    RIGHT_EYE: LOOK_RIGHT_EYE.PARTIALLY_OPEN,
-    MOUTH: LOOK_MOUTH.SAD,
-  },
-  SURPRISED: {
-    FACE: PART.FACE,
-    EYES: LOOK_EYES.PARTIALLY_OPEN,
-    LEFT_EYE: LOOK_LEFT_EYE.NEUTRAL,
-    RIGHT_EYE: LOOK_RIGHT_EYE.NEUTRAL,
-    MOUTH: LOOK_MOUTH.PARTIALLY_OPEN,
-  },
-  ANGRY: {
-    FACE: PART.FACE,
-    EYES: LOOK_EYES.SLIGHT_LEFT,
-    LEFT_EYE: LOOK_LEFT_EYE.PARTIALLY_CLOSED,
-    RIGHT_EYE: LOOK_RIGHT_EYE.PARTIALLY_CLOSED,
-    MOUTH: LOOK_MOUTH.NEUTRAL,
-  },
-  CONCENTRATED: {
-    FACE: PART.FACE,
-    EYES: LOOK_EYES.NEUTRAL,
-    LEFT_EYE: LOOK_LEFT_EYE.SLIGHT_RIGHT,
-    RIGHT_EYE: LOOK_RIGHT_EYE.SLIGHT_LEFT,
-    MOUTH: LOOK_MOUTH.PARTIALLY_OPEN,
-  },
-  CONTEMPTUOUS: {
-    FACE: PART.FACE,
-    EYES: LOOK_EYES.SLIGHT_RIGHT,
-    LEFT_EYE: LOOK_LEFT_EYE.SLIGHT_LEFT,
-    RIGHT_EYE: LOOK_RIGHT_EYE.SLIGHT_RIGHT,
-    MOUTH: LOOK_MOUTH.SAD,
-  },
-} as const;
+  SAD: [
+    {
+      look: PART.EYES,
+      part: LOOK_EYES.PARTIALLY_OPEN,
+    },
+    {
+      look: PART.LEFT_EYE,
+      part: LOOK_LEFT_EYE.PARTIALLY_OPEN,
+    },
+    {
+      look: PART.RIGHT_EYE,
+      part: LOOK_RIGHT_EYE.PARTIALLY_OPEN,
+    },
+    {
+      look: PART.MOUTH,
+      part: LOOK_MOUTH.SAD,
+    },
+  ],
+  SURPRISED: [
+    {
+      look: PART.EYES,
+      part: LOOK_EYES.PARTIALLY_OPEN,
+    },
+    {
+      look: PART.LEFT_EYE,
+      part: LOOK_LEFT_EYE.NEUTRAL,
+    },
+    {
+      look: PART.RIGHT_EYE,
+      part: LOOK_RIGHT_EYE.NEUTRAL,
+    },
+    {
+      look: PART.MOUTH,
+      part: LOOK_MOUTH.PARTIALLY_OPEN,
+    },
+  ],
+  ANGRY: [
+    {
+      look: PART.EYES,
+      part: LOOK_EYES.PARTIALLY_CLOSED,
+    },
+    {
+      look: PART.LEFT_EYE,
+      part: LOOK_LEFT_EYE.PARTIALLY_CLOSED,
+    },
+    {
+      look: PART.RIGHT_EYE,
+      part: LOOK_RIGHT_EYE.PARTIALLY_CLOSED,
+    },
+    {
+      look: PART.MOUTH,
+      part: LOOK_MOUTH.NEUTRAL,
+    },
+  ],
+  DISGUSTED: [
+    {
+      look: PART.EYES,
+      part: LOOK_EYES.PARTIALLY_CLOSED,
+    },
+    {
+      look: PART.LEFT_EYE,
+      part: LOOK_LEFT_EYE.PARTIALLY_CLOSED,
+    },
+    {
+      look: PART.RIGHT_EYE,
+      part: LOOK_RIGHT_EYE.PARTIALLY_CLOSED,
+    },
+    {
+      look: PART.MOUTH,
+      part: LOOK_MOUTH.SAD,
+    },
+  ],
+  FEARFUL: [
+    {
+      look: PART.EYES,
+      part: LOOK_EYES.PARTIALLY_OPEN,
+    },
+    {
+      look: PART.LEFT_EYE,
+      part: LOOK_LEFT_EYE.PARTIALLY_OPEN,
+    },
+    {
+      look: PART.RIGHT_EYE,
+      part: LOOK_RIGHT_EYE.PARTIALLY_OPEN,
+    },
+    {
+      look: PART.MOUTH,
+      part: LOOK_MOUTH.SAD,
+    },
+  ],
+  CONFUSED: [
+    {
+      look: PART.EYES,
+      part: LOOK_EYES.PARTIALLY_OPEN,
+    },
+    {
+      look: PART.LEFT_EYE,
+      part: LOOK_LEFT_EYE.SLIGHT_LEFT,
+    },
+    {
+      look: PART.RIGHT_EYE,
+      part: LOOK_RIGHT_EYE.SLIGHT_RIGHT,
+    },
+    {
+      look: PART.MOUTH,
+      part: LOOK_MOUTH.PARTIALLY_OPEN,
+    },
+  ],
+  CONCENTRATED: [
+    {
+      look: PART.EYES,
+      part: LOOK_EYES.PARTIALLY_OPEN,
+    },
+    {
+      look: PART.LEFT_EYE,
+      part: LOOK_LEFT_EYE.SLIGHT_RIGHT,
+    },
+    {
+      look: PART.RIGHT_EYE,
+      part: LOOK_RIGHT_EYE.SLIGHT_LEFT,
+    },
+    {
+      look: PART.MOUTH,
+      part: LOOK_MOUTH.PARTIALLY_OPEN,
+    },
+  ],
+  SURPRISE: [
+    {
+      look: PART.EYES,
+      part: LOOK_EYES.PARTIALLY_OPEN,
+    },
+    {
+      look: PART.LEFT_EYE,
+      part: LOOK_LEFT_EYE.SLIGHT_LEFT,
+    },
+    {
+      look: PART.RIGHT_EYE,
+      part: LOOK_RIGHT_EYE.SLIGHT_RIGHT,
+    },
+    {
+      look: PART.MOUTH,
+      part: LOOK_MOUTH.PARTIALLY_OPEN,
+    },
+  ],
+  DISGUST: [
+    {
+      look: PART.EYES,
+      part: LOOK_EYES.PARTIALLY_CLOSED,
+    },
+    {
+      look: PART.LEFT_EYE,
+      part: LOOK_LEFT_EYE.PARTIALLY_CLOSED,
+    },
+    {
+      look: PART.RIGHT_EYE,
+      part: LOOK_RIGHT_EYE.PARTIALLY_CLOSED,
+    },
+    {
+      look: PART.MOUTH,
+      part: LOOK_MOUTH.SAD,
+    },
+  ],
+};

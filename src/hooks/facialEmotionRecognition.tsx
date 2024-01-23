@@ -12,9 +12,18 @@ import {
 import { useExternalScript } from '../utils/ai-sdk/externalScriptsLoader';
 import { getAiSdkControls } from '../utils/ai-sdk/loader';
 
+type DominantEmotion =
+  | 'Happy'
+  | 'Sad'
+  | 'Angry'
+  | 'Surprise'
+  | 'Neutral'
+  | 'Disgust'
+  | '';
+
 interface FacilaEmotionRecognitionContextData {
   getAiSdk: (videoEl: RefObject<HTMLVideoElement>) => Promise<void>;
-  dominantEmotion: string;
+  dominantEmotion: DominantEmotion;
 }
 
 const FacilaEmotionRecognitionContext =
@@ -36,7 +45,7 @@ export function FacilaEmotionRecognitionProvider({
     'https://ai-sdk.morphcast.com/v1.16/ai-sdk.js'
   );
 
-  const [dominantEmotion, setDominantEmotion] = useState('');
+  const [dominantEmotion, setDominantEmotion] = useState<DominantEmotion>('');
 
   const getAiSdk = useCallback(
     async (videoEl: RefObject<HTMLVideoElement>) => {

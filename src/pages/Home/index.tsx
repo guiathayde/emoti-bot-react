@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import FlatList from 'flatlist-react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,8 +12,7 @@ import { useBluetooth } from '../../hooks/bluetooth';
 import AppIcon from '../../assets/app_icon.png';
 
 export function Home() {
-  const { listBluetoothDevices, devices, connectToDevice, connectedDevice } =
-    useBluetooth();
+  const { connectToDevice, connectedDevice } = useBluetooth();
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -80,7 +78,7 @@ export function Home() {
               handleClose();
               setIsBluetoothModalVisible(true);
 
-              await listBluetoothDevices();
+              await connectToDevice();
             }}
           >
             Configurar Bluetooth
@@ -122,6 +120,7 @@ export function Home() {
       <Modal
         isOpen={isBluetoothModalVisible}
         onRequestClose={() => setIsBluetoothModalVisible(false)}
+        ariaHideApp={false}
         style={{
           content: {
             top: '128px',
@@ -142,35 +141,10 @@ export function Home() {
             alignItems: 'center',
           }}
         >
-          {devices.length === 0 ? (
-            <CircularProgress
-              style={{ color: '#6750A4', marginTop: 128 }}
-              size={64}
-            />
-          ) : (
-            <div
-              style={{
-                padding: '16px 32px 16px 32px',
-                backgroundColor: '#fff',
-                marginBottom: 64,
-              }}
-            >
-              <FlatList
-                list={devices}
-                renderItem={({ device }) => (
-                  <Button
-                    style={{ width: 256, marginBottom: 8 }}
-                    variant="outlined"
-                    onClick={async () => {
-                      await connectToDevice(device);
-                    }}
-                  >
-                    {device.name ?? 'Dispositivo sem nome'}
-                  </Button>
-                )}
-              />
-            </div>
-          )}
+          <CircularProgress
+            style={{ color: '#6750A4', marginTop: 128 }}
+            size={64}
+          />
         </div>
       </Modal>
     </div>

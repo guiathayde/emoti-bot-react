@@ -4,17 +4,18 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-// import { useBluetooth } from '../../hooks/bluetooth';
+import { useBluetooth } from '../../hooks/bluetooth';
 import { useFacilaEmotionRecognition } from '../../hooks/facialEmotionRecognition';
 
-// import { EXPRESSIONS } from '../../utils/Constants/RobotFace';
+import { EXPRESSIONS } from '../../utils/Constants/RobotFace';
+import { convertToBufferArray1Byte } from '../../utils/convertToBufferArray1Byte';
 
 import { FaceTracker } from '../../components/FaceTracker';
 
 export function FacialRecognition() {
   const navigate = useNavigate();
   const { getAiSdk, dominantEmotion } = useFacilaEmotionRecognition();
-  // const { sendDataToDevice } = useBluetooth();
+  const { sendDataToDevice } = useBluetooth();
 
   const videoEl = useRef<HTMLVideoElement>(null);
 
@@ -25,11 +26,54 @@ export function FacialRecognition() {
     getAiSdk(videoEl);
   }, [getAiSdk, videoEl]);
 
-  // useEffect(() => {
-  //   if (dominantEmotion.length > 0) {
-  //     sendDataToDevice(dominantEmotion);
-  //   }
-  // }, [dominantEmotion]);
+  useEffect(() => {
+    switch (dominantEmotion) {
+      case 'Happy': {
+        const data = convertToBufferArray1Byte(EXPRESSIONS.HAPPY);
+        for (const byte of data) {
+          sendDataToDevice(byte);
+        }
+        break;
+      }
+      case 'Sad': {
+        const data = convertToBufferArray1Byte(EXPRESSIONS.SAD);
+        for (const byte of data) {
+          sendDataToDevice(byte);
+        }
+        break;
+      }
+      case 'Angry': {
+        const data = convertToBufferArray1Byte(EXPRESSIONS.ANGRY);
+        for (const byte of data) {
+          sendDataToDevice(byte);
+        }
+        break;
+      }
+      case 'Surprise': {
+        const data = convertToBufferArray1Byte(EXPRESSIONS.SURPRISE);
+        for (const byte of data) {
+          sendDataToDevice(byte);
+        }
+        break;
+      }
+      case 'Neutral': {
+        const data = convertToBufferArray1Byte(EXPRESSIONS.NEUTRAL);
+        for (const byte of data) {
+          sendDataToDevice(byte);
+        }
+        break;
+      }
+      case 'Disgust': {
+        const data = convertToBufferArray1Byte(EXPRESSIONS.DISGUST);
+        for (const byte of data) {
+          sendDataToDevice(byte);
+        }
+        break;
+      }
+      default:
+        break;
+    }
+  }, [dominantEmotion, sendDataToDevice]);
 
   if (isLoading || !image) {
     return (

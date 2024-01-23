@@ -6,15 +6,9 @@ import {
   useState,
 } from 'react';
 
-interface BluetoothDeviceProps {
-  device: BluetoothDevice;
-}
-
 interface BluetoothContextData {
-  devices: BluetoothDeviceProps[];
   connectedDevice: BluetoothDevice | null;
-  listBluetoothDevices: () => Promise<void>;
-  connectToDevice: (device: BluetoothDevice) => Promise<void>;
+  connectToDevice: () => Promise<void>;
   sendDataToDevice: (data: ArrayBuffer) => Promise<void>;
 }
 
@@ -27,52 +21,74 @@ interface BluetoothProviderProps {
 }
 
 export function BluetoothProvider({ children }: BluetoothProviderProps) {
-  const [devices, setDevices] = useState<BluetoothDeviceProps[]>([]);
   const [connectedDevice, setConnectedDevice] =
     useState<BluetoothDevice | null>(null);
   const [serviceUUID, setServiceUUID] = useState('');
   const [characteristicUUID, setCharacteristicUUID] = useState('');
 
-  const listBluetoothDevices = async () => {
+  const connectToDevice = async () => {
     try {
-      const device = await navigator.bluetooth.requestDevice({
-        acceptAllDevices: true,
-      });
+      const devices = await navigator.bluetooth.getDevices();
+      console.log('Dispositivos pareados:', devices);
 
-      setDevices((prevDevices) => [...prevDevices, { device }]);
-    } catch (error) {
-      console.error('Erro ao listar dispositivos Bluetooth:', error);
-    }
-  };
+      for (const device of devices) {
+        if (device.name === 'HEAD') {
+          setConnectedDevice(device);
 
-  const connectToDevice = async (device: BluetoothDevice) => {
-    if (!device.gatt) {
-      console.error('GATT não disponível');
-      return;
-    }
+          const signal = new AbortController();
+          device
+            .watchAdvertisements({ signal: signal.signal })
+            .catch((error) => {
+              console.log(`watch advertisements error:`, error);
+            });
 
-    try {
-      const server = await device.gatt.connect();
-      const services = await server.getPrimaryServices();
+          const result = await Promise.race([
+            new Promise((resolve) => {
+              device.onadvertisementreceived = (event) => {
+                console.log(`advertisement received:`, event);
+                resolve(event);
+              };
+            }),
+            new Promise((resolve) => {
+              setTimeout(() => {
+                resolve('timeout');
+              }, 4000);
+            }),
+          ]);
+          console.log(`received advertisement:`, result);
 
-      for (const service of services) {
-        console.log(`Serviço: ${service.uuid}`);
+          signal.abort();
 
-        const characteristics = await service.getCharacteristics();
-        for (const characteristic of characteristics) {
-          console.log(`Característica: ${characteristic.uuid}`);
+          if (device.gatt) {
+            const server = await device.gatt.connect();
+
+            const services = await server.getPrimaryServices();
+
+            const serviceUUID = services[0].uuid;
+            console.log(`Serviço: ${serviceUUID}`);
+            setServiceUUID(serviceUUID);
+
+            const characteristics = await services[0].getCharacteristics();
+            const characteristicUUID = characteristics[0].uuid;
+            console.log(`Característica: ${characteristicUUID}`);
+            setCharacteristicUUID(characteristicUUID);
+
+            console.log('Listagem de serviços e características:');
+            for (const service of services) {
+              console.log(`Serviço: ${service.uuid}`);
+
+              const characteristics = await service.getCharacteristics();
+              for (const characteristic of characteristics) {
+                console.log(`Característica: ${characteristic.uuid}`);
+              }
+
+              console.log('\n\n');
+            }
+          }
         }
       }
-
-      const characteristics = await services[0].getCharacteristics();
-
-      setServiceUUID(services[0].uuid);
-      setCharacteristicUUID(characteristics[0].uuid);
-
-      console.log('Conectado ao dispositivo:', device);
-      setConnectedDevice(device);
     } catch (error) {
-      console.error('Erro ao conectar ao dispositivo:', error);
+      console.error('Erro ao listar dispositivos Bluetooth:', error);
     }
   };
 
@@ -107,9 +123,7 @@ export function BluetoothProvider({ children }: BluetoothProviderProps) {
   return (
     <BluetoothContext.Provider
       value={{
-        devices,
         connectedDevice,
-        listBluetoothDevices,
         connectToDevice,
         sendDataToDevice,
       }}
