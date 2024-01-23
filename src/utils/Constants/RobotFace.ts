@@ -1,0 +1,130 @@
+export const PART = {
+  DISABLED: 0,
+  FACE: 1,
+  EYES: 2,
+  LEFT_EYE: 3,
+  RIGHT_EYE: 4,
+  MOUTH: 5,
+} as const;
+
+export const LOOK_EYES = {
+  NEUTRAL: 1,
+  CLOSED: 2,
+  PARTIALLY_CLOSED: 3,
+  PARTIALLY_OPEN: 4,
+  SLIGHT_LEFT: 5,
+  LEFT: 6,
+  REAL_LEFT: 7,
+  SLIGHT_RIGHT: 8,
+  RIGHT: 9,
+  REAL_RIGHT: 10,
+} as const;
+
+export const LOOK_LEFT_EYE = {
+  NEUTRAL: 1,
+  CLOSED: 2,
+  PARTIALLY_CLOSED: 3,
+  PARTIALLY_OPEN: 4,
+  SLIGHT_LEFT: 5,
+  LEFT: 6,
+  REAL_LEFT: 7,
+  SLIGHT_RIGHT: 8,
+  RIGHT: 9,
+  REAL_RIGHT: 10,
+} as const;
+
+export const LOOK_RIGHT_EYE = {
+  NEUTRAL: 1,
+  CLOSED: 2,
+  PARTIALLY_CLOSED: 3,
+  PARTIALLY_OPEN: 4,
+  SLIGHT_LEFT: 5,
+  LEFT: 6,
+  REAL_LEFT: 7,
+  SLIGHT_RIGHT: 8,
+  RIGHT: 9,
+  REAL_RIGHT: 10,
+} as const;
+
+export const LOOK_MOUTH = {
+  HAPPY: 1,
+  SAD: 2,
+  VERY_HAPPY: 3,
+  PARTIALLY_OPEN: 4,
+  NEUTRAL: 5,
+  OPENED: 6,
+} as const;
+
+export const EXPRESSIONS = {
+  NEUTRAL: [
+    {
+      look: PART.EYES,
+      part: LOOK_EYES.NEUTRAL,
+    },
+    {
+      look: PART.LEFT_EYE,
+      part: LOOK_LEFT_EYE.NEUTRAL,
+    },
+    {
+      look: PART.RIGHT_EYE,
+      part: LOOK_RIGHT_EYE.NEUTRAL,
+    },
+    {
+      look: PART.MOUTH,
+      part: LOOK_MOUTH.NEUTRAL,
+    },
+  ],
+  HAPPY: [
+    {
+      look: PART.EYES,
+      part: LOOK_EYES.PARTIALLY_CLOSED,
+    },
+    {
+      look: PART.LEFT_EYE,
+      part: LOOK_LEFT_EYE.NEUTRAL,
+    },
+    {
+      look: PART.RIGHT_EYE,
+      part: LOOK_RIGHT_EYE.NEUTRAL,
+    },
+    {
+      look: PART.MOUTH,
+      part: LOOK_MOUTH.HAPPY,
+    },
+  ],
+  SAD: {
+    FACE: PART.FACE,
+    EYES: LOOK_EYES.PARTIALLY_OPEN,
+    LEFT_EYE: LOOK_LEFT_EYE.PARTIALLY_OPEN,
+    RIGHT_EYE: LOOK_RIGHT_EYE.PARTIALLY_OPEN,
+    MOUTH: LOOK_MOUTH.SAD,
+  },
+  SURPRISED: {
+    FACE: PART.FACE,
+    EYES: LOOK_EYES.PARTIALLY_OPEN,
+    LEFT_EYE: LOOK_LEFT_EYE.NEUTRAL,
+    RIGHT_EYE: LOOK_RIGHT_EYE.NEUTRAL,
+    MOUTH: LOOK_MOUTH.PARTIALLY_OPEN,
+  },
+  ANGRY: {
+    FACE: PART.FACE,
+    EYES: LOOK_EYES.SLIGHT_LEFT,
+    LEFT_EYE: LOOK_LEFT_EYE.PARTIALLY_CLOSED,
+    RIGHT_EYE: LOOK_RIGHT_EYE.PARTIALLY_CLOSED,
+    MOUTH: LOOK_MOUTH.NEUTRAL,
+  },
+  CONCENTRATED: {
+    FACE: PART.FACE,
+    EYES: LOOK_EYES.NEUTRAL,
+    LEFT_EYE: LOOK_LEFT_EYE.SLIGHT_RIGHT,
+    RIGHT_EYE: LOOK_RIGHT_EYE.SLIGHT_LEFT,
+    MOUTH: LOOK_MOUTH.PARTIALLY_OPEN,
+  },
+  CONTEMPTUOUS: {
+    FACE: PART.FACE,
+    EYES: LOOK_EYES.SLIGHT_RIGHT,
+    LEFT_EYE: LOOK_LEFT_EYE.SLIGHT_LEFT,
+    RIGHT_EYE: LOOK_RIGHT_EYE.SLIGHT_RIGHT,
+    MOUTH: LOOK_MOUTH.SAD,
+  },
+} as const;

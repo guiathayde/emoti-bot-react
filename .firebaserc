@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "guiathayde-dev"
+  },
+  "targets": {
+    "guiathayde-dev": {
+      "hosting": {
+        "emotibot": [
+          "emotibot"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
