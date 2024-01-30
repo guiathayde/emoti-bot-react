@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { FacilaEmotionRecognitionProvider } from './facialEmotionRecognition';
-import { BluetoothProvider } from './bluetooth';
+import { RobotProvider } from './robot';
 
 interface AppProviderProps {
   children: ReactNode;
@@ -10,7 +10,7 @@ interface AppProviderProps {
 export function AppProvider({ children }: AppProviderProps) {
   return (
     <FacilaEmotionRecognitionProvider>
-      <BluetoothProvider>{children}</BluetoothProvider>
+      <RobotProvider>{children}</RobotProvider>
     </FacilaEmotionRecognitionProvider>
   );
 }

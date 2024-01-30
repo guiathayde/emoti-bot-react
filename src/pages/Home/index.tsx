@@ -1,30 +1,14 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { Bluetooth, BluetoothDisabled, MoreVert } from '@mui/icons-material';
-import CircularProgress from '@mui/material/CircularProgress';
-import Modal from 'react-modal';
+import { SignalCellularNodata, SignalCellular4Bar } from '@mui/icons-material';
 
-import { useBluetooth } from '../../hooks/bluetooth';
+import { useRobot } from '../../hooks/robot';
 
 import AppIcon from '../../assets/app_icon.png';
 
 export function Home() {
-  const { connectToDevice, connectedDevice } = useBluetooth();
   const navigate = useNavigate();
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const [isBluetoothModalVisible, setIsBluetoothModalVisible] = useState(false);
+  const { isRobotApiAvailable } = useRobot();
 
   return (
     <div
@@ -47,43 +31,11 @@ export function Home() {
           justifyContent: 'center',
         }}
       >
-        {connectedDevice !== null ? (
-          <Bluetooth htmlColor="#6750A4" fontSize="large" />
+        {isRobotApiAvailable ? (
+          <SignalCellular4Bar htmlColor="#46a75d" fontSize="large" />
         ) : (
-          <BluetoothDisabled htmlColor="#c30010" style={{ fontSize: 64 }} />
+          <SignalCellularNodata htmlColor="#c30010" style={{ fontSize: 64 }} />
         )}
-      </div>
-
-      <div
-        style={{
-          position: 'absolute',
-          top: 16,
-          right: 32,
-          flexDirection: 'row',
-          justifyContent: 'center',
-        }}
-      >
-        <Button
-          id="basic-button"
-          aria-controls={open ? 'basic-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}
-        >
-          <MoreVert style={{ fontSize: 64 }} />
-        </Button>
-        <Menu open={open} onClose={handleClose} anchorEl={anchorEl}>
-          <MenuItem
-            onClick={async () => {
-              handleClose();
-              setIsBluetoothModalVisible(true);
-
-              await connectToDevice();
-            }}
-          >
-            Configurar Bluetooth
-          </MenuItem>
-        </Menu>
       </div>
 
       <img
@@ -116,37 +68,6 @@ export function Home() {
       >
         Conheça o DC
       </Button>
-
-      <Modal
-        isOpen={isBluetoothModalVisible}
-        onRequestClose={() => setIsBluetoothModalVisible(false)}
-        ariaHideApp={false}
-        style={{
-          content: {
-            top: '128px',
-            left: '128px',
-            right: '128px',
-            bottom: '128px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          },
-        }}
-      >
-        <div
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <CircularProgress
-            style={{ color: '#6750A4', marginTop: 128 }}
-            size={64}
-          />
-        </div>
-      </Modal>
     </div>
   );
 }

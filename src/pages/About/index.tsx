@@ -83,6 +83,7 @@ export function About() {
       >
         {infos.map(({ title, description, image }) => (
           <Card
+            key={title}
             style={{
               display: 'flex',
               flexDirection: 'column',
