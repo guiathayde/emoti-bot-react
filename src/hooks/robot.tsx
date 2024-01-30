@@ -29,12 +29,15 @@ export function RobotProvider({ children }: RobotProviderProps) {
 
   useEffect(() => {
     robotApi
-      .get('/led/getExpressionList')
+      .get('/led/getExpressionsList')
       .then((response) => {
-        console.log(response.data);
+        console.log(JSON.stringify(response.data, null, 2));
         setIsRobotApiAvailable(response.status === 200);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        setIsRobotApiAvailable(false);
+      });
   }, []);
 
   return (
