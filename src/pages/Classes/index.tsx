@@ -48,6 +48,7 @@ export function Classes() {
           list={classes}
           renderItem={({ title, subtitle }) => (
             <Card
+              key={title}
               style={{
                 margin: '8px 0px',
                 borderColor: 'black',
@@ -56,7 +57,12 @@ export function Classes() {
               }}
             >
               <CardContent
-                style={{ display: 'flex', flexDirection: 'row', gap: 16, alignItems: 'center' }}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: 16,
+                  alignItems: 'center',
+                }}
               >
                 <ClassIcon />
 

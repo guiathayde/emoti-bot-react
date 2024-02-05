@@ -65,12 +65,19 @@ export function FacilaEmotionRecognitionProvider({
   );
 
   function bindEvents() {
-    window.addEventListener('CY_FACE_EMOTION_RESULT', (evt: any) => {
-      console.log(evt.detail.output);
+    let canExecute = true;
 
-      setTimeout(() => {
+    window.addEventListener('CY_FACE_EMOTION_RESULT', (evt: any) => {
+      if (canExecute) {
+        console.log(evt.detail.output);
         setDominantEmotion(evt.detail.output.dominantEmotion || '');
-      }, 500);
+
+        canExecute = false;
+
+        setTimeout(() => {
+          canExecute = true;
+        }, 3000);
+      }
     });
   }
 

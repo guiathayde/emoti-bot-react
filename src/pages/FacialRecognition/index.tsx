@@ -30,6 +30,7 @@ export function FacialRecognition() {
     switch (dominantEmotion) {
       case 'Happy': {
         const data = convertToNumberArray1Byte(EXPRESSIONS.HAPPY);
+        console.log(data);
         for (const byte of data) {
           sendData(byte);
         }
